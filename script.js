@@ -79,6 +79,7 @@ function getInput() {
                     numberCounter++;
                 } else if (userInput === "operate") {
                     numberCounter = 1;
+                    actionCounter = 0;
                     let result = operate(getAction, numbers[0], numbers[1]);
                     disp.textContent = result;
                     numbers[0] = result;
