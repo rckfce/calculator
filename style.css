@@ -6,10 +6,26 @@
     padding: 0;
 }
 
+#clear {
+    background-color: #ff6347;
+}
+
+#clear:active {
+    background-color: #f08080;
+}
+
 body {
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.operator {
+    background-color: #a9a9a9;
+}
+
+#operate {
+    background-color: #a9a9a9;
 }
 
 .calc {
@@ -73,6 +89,10 @@ body {
     margin: 1px;
     border: 2px solid #324ab2;
     border-radius: 5px;
+}
+
+#clear {
+    background-color: red;
 }
 
 .left {
