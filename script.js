@@ -12,19 +12,23 @@ function defaultDisplay() {
 }
 
 function add(a, b) {
-    return parseInt(a) + parseInt(b);
+    return parseFloat(a) + parseFloat(b);
 }
 
 function divide(a, b) {
-    return parseInt(a) / parseInt(b);
+    return parseFloat(a) / parseFloat(b);
 }
 
 function subtract(a, b) {
-    return parseInt(a) - parseInt(b);
+    return parseFloat(a) - parseFloat(b);
 }
 
 function multiply(a, b) {
-    return parseInt(a) * parseInt(b);
+    return parseFloat(a) * parseFloat(b);
+}
+
+function convertDecimal(number) {
+    return parseFloat(number);
 }
 
 /* listening to backspace button*/
@@ -92,11 +96,22 @@ function isEqual() {
     displayPrint(result, numberCounter);
 }
 
+/* listening to dot button */
+const decimal = document.getElementById("dot");
+decimal.addEventListener("click", dot) 
+
+function dot() {
+    if(disp.textContent.indexOf(".") == -1) {
+        displayPrint(".", numberCounter);
+    }
+}
+
 /* listening to number buttons */
 const btn = document.querySelectorAll(".number");
 btn.forEach(each => each.addEventListener("click", getNumber));
 
-function getNumber() {
+function getNumber(e) {
+    console.log(e);
     let userInput = convert(this.id);
     displayPrint(userInput, numberCounter);
 }
