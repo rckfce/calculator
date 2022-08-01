@@ -31,6 +31,10 @@ function convertDecimal(number) {
     return parseFloat(number);
 }
 
+/* listening to keypress */
+document.addEventListener("keyup", e => console.log(e.key));
+
+
 /* listening to backspace button*/
 const toErase = document.getElementById("backspace");
 toErase.addEventListener("click", backspace);
