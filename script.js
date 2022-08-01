@@ -6,11 +6,6 @@ let actionCounter = 0;
 const disp = document.getElementById("display");
 
 defaultDisplay();
-getAction();
-getNumber();
-isEqual();
-clear();
-backspace();
 
 function defaultDisplay() {
     disp.textContent = displayDefault;
@@ -32,23 +27,27 @@ function multiply(a, b) {
     return parseInt(a) * parseInt(b);
 }
 
+/* listening to backspace button*/
+const toErase = document.getElementById("backspace");
+toErase.addEventListener("click", backspace);
+
 function backspace() {
-    document.getElementById("backspace").addEventListener("click", e => {
-        let newText = numbers[numberCounter - 1];
-        numbers[numberCounter - 1] = "";
-        displayPrint(newText.slice(0, -1), numberCounter);
-    });
+    let newText = numbers[numberCounter - 1];
+    numbers[numberCounter - 1] = "";
+    displayPrint(newText.slice(0, -1), numberCounter);
 }
 
+/* listening to clear button */
+const toClear = document.getElementById("clear");
+toClear.addEventListener("click", clear);
+
 function clear() {
-    document.getElementById("clear").addEventListener("click", e => {
-        defaultDisplay();
-        numbers = [];
-        action = "";
-        numberCounter = 1;
-        actionCounter = 0;
-        displayPrint(displayDefault, numberCounter);
-    });
+    defaultDisplay();
+    numbers = [];
+    action = "";
+    numberCounter = 1;
+    actionCounter = 0;
+    displayPrint(displayDefault, numberCounter);
 }
 
 function operate(operator, a, b) {
@@ -64,42 +63,42 @@ function operate(operator, a, b) {
     }
 }
 
+/* listening to operator button */
+const nextAction = document.querySelectorAll(".operator");
+nextAction.forEach(each => each.addEventListener("click", getAction));
+
 function getAction() {
-    const nextAction = document.querySelectorAll(".operator");
-    nextAction.forEach ((e) => {
-        e.addEventListener("click", event => {
-            numberCounter++;
-            actionCounter++;
-            if (actionCounter > 1) {
-                let result = operate(action, numbers[0], numbers[1]).toString();
-                numberCounter = 2;
-                numbers = [];
-                displayPrint(result, 1);
-            }
-            action = e.id;
-        });
-    });
+    numberCounter++;
+    actionCounter++;
+    if (actionCounter > 1) {
+        let result = operate(action, numbers[0], numbers[1]).toString();
+        numberCounter = 2;
+        numbers = [];
+        displayPrint(result, 1);
+    }
+    action = this.id;
 }
+
+
+/* listening to equals button */
+const equal = document.getElementById("operate");
+equal.addEventListener("click", isEqual);
 
 function isEqual() {
-    const equal = document.getElementById("operate");
-    equal.addEventListener("click", e => {
-        let result = operate(action, numbers[0], numbers[1]).toString();
-        numberCounter = 1;
-        actionCounter = 0;
-        numbers = [];
-        displayPrint(result, numberCounter);
-    })
+    let result = operate(action, numbers[0], numbers[1]).toString();
+    numberCounter = 1;
+    actionCounter = 0;
+    numbers = [];
+    displayPrint(result, numberCounter);
 }
 
+/* listening to number buttons */
+const btn = document.querySelectorAll(".number");
+btn.forEach(each => each.addEventListener("click", getNumber));
+
 function getNumber() {
-    const btn = document.querySelectorAll(".number");
-    btn.forEach ((each) => {
-        each.addEventListener("click", event => {
-            let userInput = convert(each.id);
-            displayPrint(userInput, numberCounter);
-        });
-    });
+    let userInput = convert(this.id);
+    displayPrint(userInput, numberCounter);
 }
 
 function displayPrint(value,operator) {
