@@ -105,6 +105,8 @@ body {
 }
 
 .right {
+    display: flex;
+    flex-wrap: wrap;
     width: 67px;
     height: 230px;
 }

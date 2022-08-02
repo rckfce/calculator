@@ -27,6 +27,15 @@ function multiply(a, b) {
     return ((parseFloat(a) * 10000) * (parseFloat(b) * 10000)) / 100000000;
 }
 
+function zeroDivision(a, b) {
+    if(a === "0" || b === "0") {
+        alert("Cannot divide by 0!");
+        clear();
+        return true;
+    }
+    return false;
+}
+
 /* listening to keypress */
 document.addEventListener("keyup", e => keycodes(e.key));
 
@@ -36,6 +45,7 @@ const toErase = document.getElementById("backspace");
 toErase.addEventListener("click", backspace);
 
 function backspace() {
+    if(disp.textContent === "0") return;
     let newText = numbers[numberCounter - 1];
     numbers[numberCounter - 1] = "";
     displayPrint(newText.slice(0, -1), numberCounter);
@@ -89,11 +99,13 @@ equal.addEventListener("click", isEqual);
 
 function isEqual() {
     if(numberCounter === 1) return;
-    let result = operate(action, numbers[0], numbers[1]).toString();
-    numberCounter = 1;
-    actionCounter = 0;
-    numbers = [];
-    displayPrint(result, numberCounter);
+    if(!zeroDivision(numbers[0], numbers[1])) {
+        let result = operate(action, numbers[0], numbers[1]).toString();
+        numberCounter = 1;
+        actionCounter = 0;
+        numbers = [];
+        displayPrint(result, numberCounter);
+    }  
 }
 
 /* listening to dot button */
