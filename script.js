@@ -12,27 +12,23 @@ function defaultDisplay() {
 }
 
 function add(a, b) {
-    return parseFloat(a) + parseFloat(b);
+    return (parseFloat(a) * 10000 + parseFloat(b) * 10000) / 10000;
 }
 
 function divide(a, b) {
-    return parseFloat(a) / parseFloat(b);
+    return (parseFloat(a) * 10000) / (parseFloat(b) * 10000);
 }
 
 function subtract(a, b) {
-    return parseFloat(a) - parseFloat(b);
+    return (parseFloat(a) * 10000 - parseFloat(b) * 10000) / 10000;
 }
 
 function multiply(a, b) {
-    return parseFloat(a) * parseFloat(b);
-}
-
-function convertDecimal(number) {
-    return parseFloat(number);
+    return ((parseFloat(a) * 10000) * (parseFloat(b) * 10000)) / 100000000;
 }
 
 /* listening to keypress */
-document.addEventListener("keyup", e => console.log(e.key));
+document.addEventListener("keyup", e => keycodes(e.key));
 
 
 /* listening to backspace button*/
@@ -84,15 +80,15 @@ function getAction() {
         numbers = [];
         displayPrint(result, 1);
     }
-    action = this.id;
+    if(this.id) action = this.id;
 }
-
 
 /* listening to equals button */
 const equal = document.getElementById("operate");
 equal.addEventListener("click", isEqual);
 
 function isEqual() {
+    if(numberCounter === 1) return;
     let result = operate(action, numbers[0], numbers[1]).toString();
     numberCounter = 1;
     actionCounter = 0;
@@ -105,8 +101,15 @@ const decimal = document.getElementById("dot");
 decimal.addEventListener("click", dot) 
 
 function dot() {
+    if(actionCounter > 0 && numbers[numberCounter - 1] === undefined) {
+        displayPrint("0.", numberCounter);
+    }
     if(disp.textContent.indexOf(".") == -1) {
-        displayPrint(".", numberCounter);
+        if(disp.textContent[0] === "0") {
+            displayPrint("0.", numberCounter);
+        } else {
+            displayPrint(".", numberCounter);
+        }
     }
 }
 
@@ -115,7 +118,6 @@ const btn = document.querySelectorAll(".number");
 btn.forEach(each => each.addEventListener("click", getNumber));
 
 function getNumber(e) {
-    console.log(e);
     let userInput = convert(this.id);
     displayPrint(userInput, numberCounter);
 }
@@ -168,5 +170,69 @@ function convert(input) {
             return 9;
         case "zero":
             return 0;          
+    }
+}
+
+/* keyboard support */
+function keycodes(input) {
+    switch(input) {
+        case "Backspace":
+            backspace();
+            break;
+        case "Escape":
+            clear();
+            break;
+        case "Enter":
+            isEqual();
+            break;
+        case "*":
+            action = "multiply";
+            getAction();
+            break;
+        case "-":
+            action = "subtract";
+            getAction();
+            break;
+        case "/":
+            action = "divide";
+            getAction();
+            break;
+        case "+":
+            action = "add";
+            getAction();
+            break;
+        case "1":
+            displayPrint("1", numberCounter);
+            break;
+        case "2":
+            displayPrint("2", numberCounter);
+            break;
+        case "3":
+            displayPrint("3", numberCounter);
+            break;
+        case "4":
+            displayPrint("4", numberCounter);
+            break;
+        case "5":
+            displayPrint("5", numberCounter);
+            break;
+        case "6":
+            displayPrint("6", numberCounter);
+            break;
+        case "7":
+            displayPrint("7", numberCounter);
+            break;
+        case "8":
+            displayPrint("8", numberCounter);
+            break;
+        case "9":
+            displayPrint("9", numberCounter);
+            break;
+        case "0":
+            displayPrint("0", numberCounter);
+            break;
+        case ".":
+            dot();
+            break;
     }
 }
